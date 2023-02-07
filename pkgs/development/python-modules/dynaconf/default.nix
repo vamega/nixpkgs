@@ -1,9 +1,19 @@
-{
-  lib,
-  buildPythonPackage,
-  fetchPypi,
-  python,
-  pythonOlder,
+{ lib
+, buildPythonPackage
+, fetchPypi
+, python
+, pythonOlder
+, iniSupport ? false
+, configobj
+, tomlSupport ? false
+, toml
+, yamlSupport ? false
+, ruamel-yaml
+, redisSupport ? false
+, redis
+, vaultSupport ? false
+, hvac
+, pytestCheckHook
 }:
 buildPythonPackage rec {
   pname = "dynaconf";
@@ -17,6 +27,17 @@ buildPythonPackage rec {
     inherit pname version;
     sha256 = "sha256-2c+1D9SnGlQ/0jhF1PWFtiC2/22dPMGCXGFPeyCXyzk=";
   };
+
+  propagatedBuildInputs = [ ]
+    ++ lib.optional iniSupport configobj
+    ++ lib.optional tomlSupport toml
+    ++ lib.optional yamlSupport ruamel-yaml
+    ++ lib.optional redisSupport redis
+    ++ lib.optional vaultSupport hvac;
+
+  nativeCheckInputs = [ pytestCheckHook ];
+
+  # disabledTests = []
 
   pythonImportsCheck = [
     "dynaconf"
