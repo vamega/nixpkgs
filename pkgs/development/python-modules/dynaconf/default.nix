@@ -1,19 +1,18 @@
-{ lib
-, buildPythonPackage
-, fetchPypi
-, python
-, pythonOlder
-, iniSupport ? false
-, configobj
-, tomlSupport ? false
-, toml
-, yamlSupport ? false
-, ruamel-yaml
-, redisSupport ? false
-, redis
-, vaultSupport ? false
-, hvac
-, pytestCheckHook
+{
+  lib,
+  buildPythonPackage,
+  fetchPypi,
+  python,
+  pythonOlder,
+  pytestCheckHook,
+  flask,
+  django,
+  iniSupport ? false,
+  configobj,
+  redisSupport ? false,
+  redis,
+  vaultSupport ? false,
+  hvac,
 }:
 buildPythonPackage rec {
   pname = "dynaconf";
@@ -28,16 +27,15 @@ buildPythonPackage rec {
     sha256 = "sha256-2c+1D9SnGlQ/0jhF1PWFtiC2/22dPMGCXGFPeyCXyzk=";
   };
 
-  propagatedBuildInputs = [ ]
+  propagatedBuildInputs =
+    []
     ++ lib.optional iniSupport configobj
-    ++ lib.optional tomlSupport toml
-    ++ lib.optional yamlSupport ruamel-yaml
     ++ lib.optional redisSupport redis
     ++ lib.optional vaultSupport hvac;
 
-  nativeCheckInputs = [ pytestCheckHook ];
+  nativeCheckInputs = [pytestCheckHook configobj flask django];
 
-  # disabledTests = []
+  disabledTestPaths = ["tests/test_redis.py" "tests/test_vault.py"];
 
   pythonImportsCheck = [
     "dynaconf"
