@@ -7410,6 +7410,8 @@ self: super: with self; {
 
   pyrogram = callPackage ../development/python-modules/pyrogram { };
 
+  pyrosimple = callPackage ../development/python-modules/pyrosimple { };
+
   pysabnzbd = callPackage ../development/python-modules/pysabnzbd { };
 
   pysbd = callPackage ../development/python-modules/pysbd { };
