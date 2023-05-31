@@ -10024,6 +10024,8 @@ with pkgs;
 
   libnma-gtk4 = libnma.override { withGtk4 = true; };
 
+  lstun = callPackage ../applications/networking/lstun { };
+
   networkmanager_dmenu = callPackage ../tools/networking/networkmanager/dmenu  { };
 
   nm-tray = libsForQt5.callPackage ../tools/networking/networkmanager/tray.nix { };
